@@ -1,5 +1,5 @@
-﻿using Common.Logging;
-using ScriptCs;
+﻿using ScriptCs;
+using ScriptCs.Contracts;
 using ScriptCs.Engine.Roslyn;
 using ScriptCs.Hosting;
 using LogLevel = ScriptCs.Contracts.LogLevel;
@@ -12,10 +12,8 @@ namespace ScriptCsWebHost
 
         public ScriptCsService()
         {
-            var logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
-            var scriptServicesBuilder = new ScriptServicesBuilder(new ScriptConsole(), logger).
-                LogLevel(LogLevel.Info).Cache(false).Repl(false).ScriptEngine<RoslynScriptEngine>();
+            var scriptServicesBuilder = new ScriptServicesBuilder(new ScriptConsole(), new DefaultLogProvider()).
+                LogLevel(LogLevel.Info).Cache(false).Repl(false).ScriptEngine<CSharpScriptEngine>();
 
             Root = scriptServicesBuilder.Build();
         }
